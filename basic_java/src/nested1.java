@@ -1,0 +1,2 @@
+public class nested1 {
+}
