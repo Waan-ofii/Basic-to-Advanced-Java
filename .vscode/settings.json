@@ -1,0 +1,6 @@
+{
+    "java.project.sourcePaths": [
+        "jdbc_first\\lib"
+    ],
+    "java.project.referencedLibraries": []
+}
