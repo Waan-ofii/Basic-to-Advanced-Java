@@ -10,12 +10,13 @@ public class App {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/school_db","root","12@one12ONE");
             Statement stat = con.createStatement();
-        /*
+        
         //to manipulate data
         String sql= "insert into students(id, name,age,grade) values(3,'will smith',21 ,'A-')";
             int ru = stat.executeUpdate(sql);
+            
              System.out.println(ru);
-         */
+         
          /* */
                 //   how to get metedata wich means data about our database
                 String sq = "select * from students";
@@ -23,7 +24,11 @@ public class App {
                 ResultSet rs = stat.executeQuery(sq);
             ResultSetMetaData Rmt = rs.getMetaData();
            int count = Rmt.getColumnCount();
+           rs.absolute(2);
+            rs.deleteRow();
             while (rs.next()) {
+               // System.out.println(rs.getString("grade"));
+               
                 for(int i=1; i<=count; i++){
              System.out.print(rs.getString(i)+"\t");  
                 }
