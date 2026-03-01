@@ -12,10 +12,10 @@ public class App {
             Statement stat = con.createStatement();
         
         //to manipulate data
-        String sql= "insert into students(id, name,age,grade) values(3,'will smith',21 ,'A-')";
-            int ru = stat.executeUpdate(sql);
+        // String sql= "insert into students(id, name,age,grade) values(3,'will smith',21 ,'A-')";
+        //     int ru = stat.executeUpdate(sql);
             
-             System.out.println(ru);
+        //      System.out.println(ru);
          
          /* */
                 //   how to get metedata wich means data about our database
@@ -27,12 +27,12 @@ public class App {
            rs.absolute(2);
             rs.deleteRow();
             while (rs.next()) {
-               // System.out.println(rs.getString("grade"));
+               System.out.println(rs.getString("grade"));
                
-                for(int i=1; i<=count; i++){
-             System.out.print(rs.getString(i)+"\t");  
-                }
-                System.out.println();
+            //     for(int i=1; i<=count; i++){
+            //  System.out.print(rs.getString(i)+"\t");  
+            //     }
+            //     System.out.println();
             } 
             con.close();
         } catch (Exception e) {
