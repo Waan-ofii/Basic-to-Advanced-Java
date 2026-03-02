@@ -32,7 +32,7 @@ public class Batch {
         stmt.close();
         con.close();
         } catch (Exception e) {
-            // TODO: handle exception
+            e.printStackTrace();
         }
        
     }
