@@ -4,7 +4,7 @@ public class Class2 {
     public static void main(String[] args) {
         Class1 n = new Class1();
 
-        //private can accessed in another class
+        //default can accessed in another class
         System.out.println(n.x);
         System.out.println(n.y);
 
