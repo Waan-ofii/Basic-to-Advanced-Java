@@ -1,6 +1,7 @@
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import db.DBconnection;
+import javax.swing.JOptionPane;
 public class RegistrationForms extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(RegistrationForms.class.getName());
@@ -110,27 +111,38 @@ public class RegistrationForms extends javax.swing.JFrame {
     }//GEN-LAST:event_emailActionPerformed
 
     private void registerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registerActionPerformed
-        String Username = username.getText();
-    String Email = email.getText();
-    String Password = new String(password.getPassword());
+        String usernameText = username.getText();
+String emailText = email.getText();
+String passwordText = new String(password.getPassword());
 
-    try {
-        Connection con = DBconnection.getConnection();
+try {
+    Connection con = DBconnection.getConnection();
 
-        String sql = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
-        PreparedStatement pst = con.prepareStatement(sql);
-
-        pst.setString(1, Username);
-        pst.setString(2, Email);
-        pst.setString(3, Password);
-
-        pst.executeUpdate();
-
-        javax.swing.JOptionPane.showMessageDialog(this, "Inserted Successfully!");
-
-    } catch (Exception e) {
-        javax.swing.JOptionPane.showMessageDialog(this, e);
+    if(con == null){
+        JOptionPane.showMessageDialog(this, "Database connection failed!");
+        return;
     }
+
+    String sql = "INSERT INTO users (username, email, password) VALUES (?, ?, ?)";
+    PreparedStatement pst = con.prepareStatement(sql);
+
+    pst.setString(1, usernameText);
+    pst.setString(2, emailText);
+    pst.setString(3, passwordText);
+
+    pst.executeUpdate();
+
+    JOptionPane.showMessageDialog(this, "Inserted Successfully!");
+
+    // clear fields
+    username.setText("");
+    email.setText("");
+    password.setText("");
+
+} catch (Exception e) {
+    e.printStackTrace(); // shows real error
+    JOptionPane.showMessageDialog(this, e);
+}
     }//GEN-LAST:event_registerActionPerformed
 
     /**
