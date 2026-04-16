@@ -1,5 +1,6 @@
 
- class multithread extends Thread {    public void run(){
+ class multithread extends Thread {   
+     public void run(){
         for(int i=0; i<10; i++){
 System.out.println(i);
         }
@@ -23,8 +24,9 @@ class Main{
         System.out.println(Thread.currentThread().getName());
 multithread m1=new multithread();
 multithread2 m2= new multithread2();
-m1.start();
 m2.start();
+m1.start();
+
     }
 
 }
