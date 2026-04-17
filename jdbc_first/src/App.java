@@ -16,7 +16,7 @@ public class App {
         //     int ru = stat.executeUpdate(sql);
             
         //      System.out.println(ru);
-         
+          
          /* */
                 //   how to get metedata wich means data about our database
                 String sq = "select * from students";

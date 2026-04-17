@@ -9,7 +9,7 @@ public class MetaData {
         String password = "12@one12ONE";
 
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName("com.mysql.jdbc.Driver");
             Connection con= DriverManager.getConnection(url,username,password);
             
 
@@ -29,10 +29,10 @@ System.out.println();
 
 System.out.println("=========RresultSet MetaData ================");
  
-String sql = "select * from phones";
+ String sql = "select * from phones";
  Statement stmt = con.createStatement();
  ResultSet rs = stmt.executeQuery(sql);
-ResultSetMetaData rm =rs.getMetaData();
+ ResultSetMetaData rm =rs.getMetaData();
 
 System.out.println("get column count : "+rm.getColumnCount());
 System.out.println("is column auto increament : "+rm.isAutoIncrement(4));
