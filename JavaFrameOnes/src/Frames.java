@@ -32,7 +32,7 @@ public class Frames {
 frame.add(l1);
 
    l2=new JLabel("Username: ");
-      l2.setFont(new Font("Roboto",Font.BOLD,28));
+      l2.setFont(new Font("Serif",Font.BOLD,24));
       l2.setBounds(50,60,175,30);
       l2.setForeground(Color.BLACK);
 frame.add(l2);
