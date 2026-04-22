@@ -1,10 +1,6 @@
 import java.util.*;
 
-// =======================
-// STRATEGY PATTERN
-// =======================
 
-// Strategy interface
 interface PaymentStrategy {
     void pay(int amount);
 }
@@ -82,9 +78,6 @@ class NewsPublisher {
 }
 
 
-// =======================
-// MAIN DEMO
-// =======================
 public class Main {
     public static void main(String[] args) {
 
