@@ -1,77 +1,118 @@
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import java.awt.Container;
-import java.awt.Color;
-import java.awt.Font;
+import javax.swing.*;
+import java.awt.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 
-import javax.swing.JLabel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
 
-public class Frames {
+public class Frames extends JFrame {
+    JTextField txtUsername, txtEmail;
+    JPasswordField txtPassword, txtConfirmPassword;
+    JButton btnRegister;
+
+    public Frames() {
+
+        setTitle("Registration window");
+        setSize(600, 600);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(null);
+
+        Container c = getContentPane();
+        c.setBackground(Color.YELLOW);
+
+        // Heading
+        JLabel heading = new JLabel("REGISTRATION FORM");
+        heading.setFont(new Font("Serif", Font.BOLD, 24));
+        heading.setBounds(120, 40, 400, 30);
+        add(heading);
+
+        // Labels
+        JLabel Username = new JLabel("Username");
+        Username.setFont(new Font("Roboto", Font.PLAIN, 18));
+        Username.setBounds(50, 100, 250, 30);
+        add(Username);
+
+        JLabel Email = new JLabel("Email");
+        Email.setFont(new Font("Roboto", Font.PLAIN, 18));
+        Email.setBounds(50, 150, 250, 30);
+        add(Email);
+
+        JLabel Password = new JLabel("Password");
+        Password.setFont(new Font("Roboto", Font.PLAIN, 18));
+        Password.setBounds(50, 200, 250, 30);
+        add(Password);
+
+        JLabel Cpassword = new JLabel("Confirm Password");
+        Cpassword.setFont(new Font("Roboto", Font.PLAIN, 18));
+        Cpassword.setBounds(50, 250, 250, 30);
+        add(Cpassword);
+
+        // TextFields
+        txtUsername = new JTextField();
+        txtUsername.setBounds(255, 100, 200, 30);
+        add(txtUsername);
+
+        txtEmail = new JTextField();
+        txtEmail.setBounds(255, 150, 200, 30);
+        add(txtEmail);
+
+        txtPassword = new JPasswordField();
+        txtPassword.setBounds(255, 200, 200, 30);
+        add(txtPassword);
+
+        txtConfirmPassword = new JPasswordField();
+        txtConfirmPassword.setBounds(255, 250, 200, 30);
+        add(txtConfirmPassword);
+
+        // Button
+        btnRegister = new JButton("Submit");
+        btnRegister.setFont(new Font("Roboto", Font.BOLD, 18));
+        btnRegister.setBounds(150, 330, 150, 30);
+        btnRegister.setBackground(Color.gray);
+        add(btnRegister);
+
+        
+        btnRegister.addActionListener(e -> registerUser());
+    }
+
+   
+    private void registerUser() {
+
+        String name = txtUsername.getText();
+        String email = txtEmail.getText();
+        String password = new String(txtPassword.getPassword());
+        String confirmPassword = new String(txtConfirmPassword.getPassword());
+
+        if (name.isEmpty() || email.isEmpty() || password.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "All fields are required!");
+            return;
+        }
+
+        if (!password.equals(confirmPassword)) {
+            JOptionPane.showMessageDialog(this, "Passwords do not match!");
+            return;
+        }
+
+        try {
+            Connection con = DBConnection.getConnection();
+
+            String query = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
+            PreparedStatement ps = con.prepareStatement(query);
+
+            ps.setString(1, name);
+            ps.setString(2, email);
+            ps.setString(3, password);
+
+            ps.executeUpdate();
+
+            JOptionPane.showMessageDialog(this, "Registration Successful!");
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        }
+    }
+
+
     public static void main(String[] args) {
-        JFrame frame=new JFrame("Registration window");
-        frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLayout(null);
-        frame.setBounds(100,100,600,600);
-        
-
-        Container c=frame.getContentPane();
-         c.setBackground(Color.YELLOW);
-
-         JLabel  heading,Username,Email,Password,Cpassword;
-        
-         //heading
-         heading= new JLabel("REGISTRATION FORM");
-         heading.setFont(new Font("Serif",Font.BOLD,24));
-         heading.setBounds(120,40,400,30);
-    frame.add(heading);
-     
-    Username=new JLabel("Username");
-    Username. setFont(new Font("Roboto",Font.PLAIN,18));
-    Username.setBounds(50,100,250,30);
-frame.add(Username);
-
-    Email=new JLabel("Email");
-    Email. setFont(new Font("Roboto",Font.PLAIN,18));
-    Email.setBounds(50,150,250,30);
-frame.add(Email);
-
-    Password=new JLabel("Password");
-    Password. setFont(new Font("Roboto",Font.PLAIN,18));
-    Password.setBounds(50,200,250,30);
-frame.add(Password);
-
-  Cpassword=new JLabel("Confirm Password");
-    Cpassword. setFont(new Font("Roboto",Font.PLAIN,18));
-    Cpassword.setBounds(50,250,250,30);
-frame.add(Cpassword);
-
-JTextField txtUsername,txtEmail;
- txtUsername= new JTextField();
-txtUsername.setBounds(255,100,200,30);
-txtEmail= new JTextField();
-txtEmail.setBounds(255,150,200,30);
-
-frame.add(txtUsername);
-frame.add(txtEmail);
-JPasswordField txtPassword,txtConfirmPassword;
-
-txtPassword=new JPasswordField();
-txtPassword.setBounds(255,200,200,30);
-
-txtConfirmPassword=new JPasswordField();
-txtConfirmPassword.setBounds(255,250,200,30);
-frame.add(txtPassword);
-frame.add(txtConfirmPassword);
-
-    JButton btn=new JButton("Submit");
-    btn. setFont(new Font("Roboto",Font.BOLD,18));
-    btn.setBounds(150,330,150,30);
-    btn.setBackground(Color.gray);
-
-    frame.add(btn);
-
+        new Frames().setVisible(true);
     }
 }
