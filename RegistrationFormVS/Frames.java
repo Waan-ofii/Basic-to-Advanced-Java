@@ -1,80 +1,70 @@
 import javax.swing.*;
 import java.awt.*;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-
+import java.awt.event.*;
+import java.sql.*;
+import java.security.MessageDigest;
 
 public class Frames extends JFrame {
+
     JTextField txtUsername, txtEmail;
     JPasswordField txtPassword, txtConfirmPassword;
     JButton btnRegister;
 
     public Frames() {
 
-        setTitle("Registration window");
-        setSize(600, 600);
+        setTitle("Registration Form");
+        setSize(400, 350);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(null);
+        setLocationRelativeTo(null);
 
-        Container c = getContentPane();
-        c.setBackground(Color.YELLOW);
+        // Layout
+        setLayout(new GridLayout(6, 2, 10, 10));
 
-        // Heading
-        JLabel heading = new JLabel("REGISTRATION FORM");
-        heading.setFont(new Font("Serif", Font.BOLD, 24));
-        heading.setBounds(120, 40, 400, 30);
-        add(heading);
-
-        // Labels
-        JLabel Username = new JLabel("Username");
-        Username.setFont(new Font("Roboto", Font.PLAIN, 18));
-        Username.setBounds(50, 100, 250, 30);
-        add(Username);
-
-        JLabel Email = new JLabel("Email");
-        Email.setFont(new Font("Roboto", Font.PLAIN, 18));
-        Email.setBounds(50, 150, 250, 30);
-        add(Email);
-
-        JLabel Password = new JLabel("Password");
-        Password.setFont(new Font("Roboto", Font.PLAIN, 18));
-        Password.setBounds(50, 200, 250, 30);
-        add(Password);
-
-        JLabel Cpassword = new JLabel("Confirm Password");
-        Cpassword.setFont(new Font("Roboto", Font.PLAIN, 18));
-        Cpassword.setBounds(50, 250, 250, 30);
-        add(Cpassword);
-
-        // TextFields
+        // Components
+        add(new JLabel("Username:"));
         txtUsername = new JTextField();
-        txtUsername.setBounds(255, 100, 200, 30);
         add(txtUsername);
 
+        add(new JLabel("Email:"));
         txtEmail = new JTextField();
-        txtEmail.setBounds(255, 150, 200, 30);
         add(txtEmail);
 
+        add(new JLabel("Password:"));
         txtPassword = new JPasswordField();
-        txtPassword.setBounds(255, 200, 200, 30);
         add(txtPassword);
 
+        add(new JLabel("Confirm Password:"));
         txtConfirmPassword = new JPasswordField();
-        txtConfirmPassword.setBounds(255, 250, 200, 30);
         add(txtConfirmPassword);
 
-        // Button
-        btnRegister = new JButton("Submit");
-        btnRegister.setFont(new Font("Roboto", Font.BOLD, 18));
-        btnRegister.setBounds(150, 330, 150, 30);
-        btnRegister.setBackground(Color.gray);
+        btnRegister = new JButton("Register");
+        add(new JLabel()); // empty cell
         add(btnRegister);
 
-        
         btnRegister.addActionListener(e -> registerUser());
     }
 
-   
+    // ================= DATABASE CONNECTION =================
+    public static Connection getConnection() throws Exception {
+        String url = "jdbc:mysql://localhost:3306/testdb";
+        String user = "root";
+        String password = "";
+        return DriverManager.getConnection(url, user, password);
+    }
+
+    // ================= PASSWORD HASHING =================
+    public static String hashPassword(String password) throws Exception {
+        MessageDigest md = MessageDigest.getInstance("SHA-256");
+        byte[] hash = md.digest(password.getBytes());
+
+        StringBuilder hex = new StringBuilder();
+        for (byte b : hash) {
+            hex.append(String.format("%02x", b));
+        }
+        return hex.toString();
+    }
+
+    // ================= REGISTRATION LOGIC =================
     private void registerUser() {
 
         String name = txtUsername.getText();
@@ -82,8 +72,14 @@ public class Frames extends JFrame {
         String password = new String(txtPassword.getPassword());
         String confirmPassword = new String(txtConfirmPassword.getPassword());
 
+        // Validation
         if (name.isEmpty() || email.isEmpty() || password.isEmpty()) {
             JOptionPane.showMessageDialog(this, "All fields are required!");
+            return;
+        }
+
+        if (!email.contains("@") || !email.contains(".")) {
+            JOptionPane.showMessageDialog(this, "Invalid email format!");
             return;
         }
 
@@ -92,27 +88,46 @@ public class Frames extends JFrame {
             return;
         }
 
-        try {
-            Connection con = DBConnection.getConnection();
+        try (Connection con = getConnection()) {
 
+            // Check duplicate email
+            String checkQuery = "SELECT * FROM users WHERE email = ?";
+            try (PreparedStatement checkPs = con.prepareStatement(checkQuery)) {
+                checkPs.setString(1, email);
+                ResultSet rs = checkPs.executeQuery();
+
+                if (rs.next()) {
+                    JOptionPane.showMessageDialog(this, "Email already exists!");
+                    return;
+                }
+            }
+
+            // Insert user
             String query = "INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
-            PreparedStatement ps = con.prepareStatement(query);
+            try (PreparedStatement ps = con.prepareStatement(query)) {
 
-            ps.setString(1, name);
-            ps.setString(2, email);
-            ps.setString(3, password);
+                ps.setString(1, name);
+                ps.setString(2, email);
+                ps.setString(3, hashPassword(password));
 
-            ps.executeUpdate();
+                ps.executeUpdate();
+            }
 
             JOptionPane.showMessageDialog(this, "Registration Successful!");
+
+            // Clear fields
+            txtUsername.setText("");
+            txtEmail.setText("");
+            txtPassword.setText("");
+            txtConfirmPassword.setText("");
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
         }
     }
 
-
+    // ================= MAIN METHOD =================
     public static void main(String[] args) {
-        new Frames().setVisible(true);
+        SwingUtilities.invokeLater(() -> new Frames().setVisible(true));
     }
 }
