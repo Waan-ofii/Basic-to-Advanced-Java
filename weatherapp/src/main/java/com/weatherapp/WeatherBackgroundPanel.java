@@ -7,32 +7,83 @@ public class WeatherBackgroundPanel extends JPanel {
 
     private Image backgroundImage;
 
-    public void setWeather(String condition) {
+    public WeatherBackgroundPanel() {
 
-        if (condition == null) return;
+        setWeatherBackground("clear");
+
+    }
+
+    // ================= CHANGE BACKGROUND =================
+    public void setWeatherBackground(String condition) {
+
+        if (condition == null) {
+            condition = "clear";
+        }
 
         condition = condition.toLowerCase();
 
-        String path;
+        String imageName;
+
+        // ================= WEATHER CONDITIONS =================
 
         if (condition.contains("rain")) {
-            path = "src/main/resources/images/rain.jpg";
+
+            imageName = "rainy.jpg";
+
         }
         else if (condition.contains("cloud")) {
-            path = "src/main/resources/images/cloud.jpg";
+
+            imageName = "cloudy.jpg";
+
         }
-        else if (condition.contains("mist") || condition.contains("fog")) {
-            path = "src/main/resources/images/fog.jpg";
+        else if (condition.contains("storm")
+                || condition.contains("thunder")) {
+
+            imageName = "storm.jpg";
+
+        }
+        else if (condition.contains("mist")
+                || condition.contains("fog")
+                || condition.contains("haze")) {
+
+            imageName = "fog.jpg";
+
+        }
+        else if (condition.contains("night")) {
+
+            imageName = "night.jpg";
+
         }
         else {
-            path = "src/main/resources/images/sunny.jpg";
+
+            imageName = "sunny.jpg";
+
         }
 
-        backgroundImage = new ImageIcon(path).getImage();
+        // ================= LOAD IMAGE =================
+        try {
+
+            ImageIcon icon =
+                    new ImageIcon(
+                            getClass()
+                                    .getResource("/images/" + imageName)
+                    );
+
+            backgroundImage = icon.getImage();
+
+        }
+        catch (Exception e) {
+
+            System.out.println(
+                    "Image not found: " + imageName
+            );
+
+        }
 
         repaint();
     }
 
+    // ================= DRAW BACKGROUND =================
     @Override
     protected void paintComponent(Graphics g) {
 
@@ -40,17 +91,36 @@ public class WeatherBackgroundPanel extends JPanel {
 
         if (backgroundImage != null) {
 
-            g.drawImage(backgroundImage,
+            g.drawImage(
+                    backgroundImage,
                     0,
                     0,
                     getWidth(),
                     getHeight(),
-                    this);
+                    this
+            );
+
+            // Dark overlay for readability
+            g.setColor(new Color(0, 0, 0, 80));
+
+            g.fillRect(
+                    0,
+                    0,
+                    getWidth(),
+                    getHeight()
+            );
 
         } else {
 
-            g.setColor(new Color(135, 206, 235));
-            g.fillRect(0, 0, getWidth(), getHeight());
+            // fallback background
+            g.setColor(new Color(70, 130, 180));
+
+            g.fillRect(
+                    0,
+                    0,
+                    getWidth(),
+                    getHeight()
+            );
 
         }
     }
