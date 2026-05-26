@@ -83,13 +83,22 @@ public class WeatherService {
                             .get("speed")
                             .getAsDouble();
 
+            // Extract sunrise, sunset, and current time (all UTC Unix seconds)
+            JsonObject sys = jsonObject.getAsJsonObject("sys");
+            long sunrise = sys.get("sunrise").getAsLong();
+            long sunset  = sys.get("sunset").getAsLong();
+            long currentTime = jsonObject.get("dt").getAsLong();
+
             // Return object
             return new WeatherData(
                     cityName,
                     temperature,
                     humidity,
                     description,
-                    windSpeed
+                    windSpeed,
+                    sunrise,
+                    sunset,
+                    currentTime
             );
 
         } catch (Exception e) {

@@ -145,7 +145,8 @@ public class WeatherUI extends JFrame {
 
                 // ================= CHANGE BACKGROUND =================
                 backgroundPanel.setWeatherBackground(
-                        data.getDescription()
+                        data.getDescription(),
+                        data.isDay()
                 );
 
                 // ================= UPDATE WEATHER INFO =================

@@ -29,6 +29,15 @@
 
     <build>
 
+        <resources>
+            <resource>
+                <directory>src/main/java/resourses</directory>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
+
         <plugins>
 
             <plugin>
