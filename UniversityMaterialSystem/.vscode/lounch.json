@@ -1,0 +1,21 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Run Server",
+            "request": "launch",
+            "mainClass": "com.university.server.MainServer",
+            "projectName": "UniversityMaterialSystem",
+            "vmArgs": "-cp .;lib/mysql-connector-java-8.0.33.jar;src"
+        },
+        {
+            "type": "java",
+            "name": "Run Client",
+            "request": "launch",
+            "mainClass": "com.university.client.MainClient",
+            "projectName": "UniversityMaterialSystem",
+            "vmArgs": "--module-path \"C:/Program Files/Java/javafx-sdk-17/lib\" --add-modules javafx.controls,javafx.fxml"
+        }
+    ]
+}

@@ -1,0 +1,10 @@
+{
+    "java.project.sourcePaths": ["src"],
+    "java.project.outputPath": "bin",
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "C:/Program Files/Java/javafx-sdk-17/lib/*.jar"
+    ],
+    "java.debug.settings.onBuildFailureProceed": true,
+    "javafx.runtime.libPath": "C:/Program Files/Java/javafx-sdk-17/lib"
+}
