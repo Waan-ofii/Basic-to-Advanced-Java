@@ -11,12 +11,14 @@ public class SimpleFX extends Application {
     
     @Override
     public void start(Stage stage) {
-        Label label = new Label("JavaFX is Working!");
-        label.setStyle("-fx-font-size: 24px; -fx-fill: green;");
+        Label label = new Label("JavaFX 21 is Working!");
+        label.setStyle("-fx-font-size: 24px; -fx-text-fill: green;");
         StackPane root = new StackPane(label);
-        Scene scene = new Scene(root, 400, 300);
-        stage.setTitle("Test");
+        Scene scene = new Scene(root, 500, 300);
+        stage.setTitle("JavaFX 21 Test");
         stage.setScene(scene);
         stage.show();
+        
+        System.out.println("✅ Window displayed successfully!");
     }
 }
