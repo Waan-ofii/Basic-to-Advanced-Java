@@ -16,7 +16,6 @@ public class Manip {
 
             System.out.println("rows affected: "+row);
 
-            
         } catch (Exception e) {
             e.printStackTrace();
         }
