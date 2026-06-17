@@ -22,7 +22,7 @@ public class WelcomeFrame extends JFrame {
                 new JLabel(
                         "<html><center>Welcome "
                                 + username
-                                + "!<br><br>A New Day, A New Opportunity.</center></html>",
+                                + "</center></html>",
                         SwingConstants.CENTER);
 
         welcome.setFont(
