@@ -1,0 +1,12 @@
+{
+    "kiroAgent.configureMCP": "Disabled",
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "C:\\Program Files\\Java\\javafx-sdk-21.0.5\\lib\\javafx.base.jar",
+        "C:\\Program Files\\Java\\javafx-sdk-21.0.5\\lib\\javafx.controls.jar",
+        "C:\\Program Files\\Java\\javafx-sdk-21.0.5\\lib\\javafx.fxml.jar",
+        "C:\\Program Files\\Java\\javafx-sdk-21.0.5\\lib\\javafx.graphics.jar",
+        "C:\\Program Files\\Java\\javafx-sdk-21.0.5\\lib\\javafx.media.jar",
+        "C:\\Program Files\\Java\\javafx-sdk-21.0.5\\lib\\javafx.swing.jar"
+    ]
+}

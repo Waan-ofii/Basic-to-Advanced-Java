@@ -1,0 +1,32 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch Client",
+            "request": "launch",
+            "mainClass": "com.university.client.Launcher",
+            "projectName": "UniversityMaterialSystem",
+            "vmArgs": "--module-path \"C:\\Program Files\\Java\\javafx-sdk-21.0.5\\lib\" --add-modules javafx.controls,javafx.fxml,javafx.graphics",
+            "classPaths": [
+                "${workspaceFolder}/build/classes",
+                "${workspaceFolder}/lib/mysql-connector-j-9.6.0.jar",
+                "C:\\Program Files\\Java\\javafx-sdk-21.0.5\\lib\\javafx.base.jar",
+                "C:\\Program Files\\Java\\javafx-sdk-21.0.5\\lib\\javafx.controls.jar",
+                "C:\\Program Files\\Java\\javafx-sdk-21.0.5\\lib\\javafx.fxml.jar",
+                "C:\\Program Files\\Java\\javafx-sdk-21.0.5\\lib\\javafx.graphics.jar"
+            ]
+        },
+        {
+            "type": "java",
+            "name": "Launch Server",
+            "request": "launch",
+            "mainClass": "com.university.server.MainServer",
+            "projectName": "UniversityMaterialSystem",
+            "classPaths": [
+                "${workspaceFolder}/build/classes",
+                "${workspaceFolder}/lib/mysql-connector-j-9.6.0.jar"
+            ]
+        }
+    ]
+}
